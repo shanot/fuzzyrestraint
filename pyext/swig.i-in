@@ -1,0 +1,8 @@
+IMP_SWIG_OBJECT(IMP::fuzzyrestraint, FuzzyRestraint, FuzzyRestraints);
+IMP_SWIG_OBJECT(IMP::fuzzyrestraint, FuzzyOr, FuzzyOrs);
+IMP_SWIG_OBJECT(IMP::fuzzyrestraint, FuzzyAnd, FuzzyAnds);
+IMP_SWIG_OBJECT(IMP::fuzzyrestraint, FuzzySigmoidRestraint, FuzzySigmoidRestraints);
+IMP_SWIG_OBJECT(IMP::fuzzyrestraint, FuzzyLinearRestraint, FuzzyLinearRestraints);
+
+%include "IMP/fuzzyrestraint/FuzzyRestraint.h"
+
