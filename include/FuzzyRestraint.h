@@ -44,10 +44,6 @@ public:
     Model *m(get_model());
     double const a(r1_->get_score());
     double const b(r2_->get_score());
-		//double score(1.0 - (1.0 - a) * (1.0 - b));
-		//if(score==1){
-		//	score = b+a-a*b;
-		//}
     return b+a-a*b;
   }
   virtual ModelObjectsTemp do_get_inputs() const IMP_OVERRIDE {
