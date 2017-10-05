@@ -24,9 +24,9 @@ class IMPFUZZYRESTRAINTEXPORT FuzzyRestraint : public Restraint {
 public:
   FuzzyRestraint(Model *m, std::string name) : Restraint(m, name) {}
   virtual double unprotected_evaluate(DerivativeAccumulator *) const {
-    return -log(get_score());
+    return -log(get_probability());
   };
-  virtual double get_score() const = 0;
+  virtual double get_probability() const = 0;
   virtual ModelObjectsTemp do_get_inputs() const = 0;
   FuzzyOr *operator|(FuzzyRestraint *r);
   FuzzyAnd *operator&(FuzzyRestraint *r);
@@ -40,10 +40,10 @@ class IMPFUZZYRESTRAINTEXPORT FuzzyOr : public FuzzyRestraint {
 public:
   FuzzyOr(Model *m, FuzzyRestraint *r1, FuzzyRestraint *r2)
       : FuzzyRestraint(m, "FuzzyOr %1%"), r1_(r1), r2_(r2) {}
-  virtual double get_score() const IMP_OVERRIDE {
+  virtual double get_probability() const IMP_OVERRIDE {
     Model *m(get_model());
-    double const a(r1_->get_score());
-    double const b(r2_->get_score());
+    double const a(r1_->get_probability());
+    double const b(r2_->get_probability());
     return b+a-a*b;
   }
   virtual ModelObjectsTemp do_get_inputs() const IMP_OVERRIDE {
@@ -62,10 +62,10 @@ class IMPFUZZYRESTRAINTEXPORT FuzzyAnd : public FuzzyRestraint {
 public:
   FuzzyAnd(Model *m, FuzzyRestraint *r1, FuzzyRestraint *r2)
       : FuzzyRestraint(m, "FuzzyAnd %1%"), r1_(r1), r2_(r2) {}
-  virtual double get_score() const IMP_OVERRIDE {
+  virtual double get_probability() const IMP_OVERRIDE {
     Model *m(get_model());
-    double const a(r1_->get_score());
-    double const b(r2_->get_score());
+    double const a(r1_->get_probability());
+    double const b(r2_->get_probability());
     return a * b;
   }
   virtual ModelObjectsTemp do_get_inputs() const IMP_OVERRIDE {
@@ -95,7 +95,7 @@ public:
         start_(start), end_(end), innerslope_(innerslope) {
     slope_ = 1.0 / (end - start);
   }
-  virtual double get_score() const
+  virtual double get_probability() const
       IMP_OVERRIDE {
     Model *m(get_model());
     double const d(core::get_distance(core::XYZ(m, p1_->get_index()),
@@ -134,7 +134,7 @@ public:
       : FuzzyRestraint(m, "FuzzySigmoidRestraint %1%"), p1_(p1), p2_(p2),
         theta_(theta), slope_(slope), plateau_(plateau),
         innerslope_(innerslope) {}
-  virtual double get_score() const IMP_OVERRIDE {
+  virtual double get_probability() const IMP_OVERRIDE {
     Model *m(get_model());
     double const d(core::get_distance(core::XYZ(m, p1_->get_index()),
                                       core::XYZ(m, p2_->get_index())));
