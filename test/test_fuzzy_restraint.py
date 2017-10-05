@@ -323,6 +323,7 @@ class Tests(IMP.test.TestCase):
         print(rand.unprotected_evaluate(None))
         ror = rand | r1or
         print(ror.unprotected_evaluate(None))
+        print(ror.get_output())
 
 
 if __name__ == '__main__':

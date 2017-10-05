@@ -10,6 +10,7 @@
 #include "fuzzyrestraint_config.h"
 #include <IMP/Restraint.h>
 #include <IMP/Particle.h>
+#include <Python.h>
 
 IMPFUZZYRESTRAINT_BEGIN_NAMESPACE
 //! Fuzzy Restraint
@@ -30,6 +31,11 @@ public:
   virtual ModelObjectsTemp do_get_inputs() const = 0;
   FuzzyOr *operator|(FuzzyRestraint *r);
   FuzzyAnd *operator&(FuzzyRestraint *r);
+	PyObject* get_output(){
+		PyObject* out(PyDict_New());
+		PyDict_SetItem(out, PyString_FromString(get_name().c_str()), PyFloat_FromDouble(get_probability()));
+		return out;
+	}
   IMP_OBJECT_METHODS(FuzzyRestraint);
 };
 
